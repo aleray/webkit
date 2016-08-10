@@ -28,6 +28,7 @@
 #ifndef QT_NO_ACCESSIBILITY
 #include "qwebviewaccessible_p.h"
 #endif
+#include <qapplication.h>
 #include <qbitmap.h>
 #include <qdir.h>
 #include <qevent.h>
@@ -259,7 +260,9 @@ void QWebView::setPage(QWebPage* page)
 
     if (d->page) {
         d->page->setView(this);
-        d->page->setPalette(palette());
+        QPalette palette = QApplication::palette();
+        palette.setBrush(QPalette::Base, QColor::fromRgbF(0, 0, 0, 0));
+        d->page->setPalette(palette);
         // #### connect signals
         QWebFrame *mainFrame = d->page->mainFrame();
         connect(mainFrame, SIGNAL(titleChanged(QString)),
