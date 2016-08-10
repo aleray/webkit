@@ -225,7 +225,9 @@ bool QWebElement::isNull() const
     \a selectorQuery. If there are no matching elements, an empty list is
     returned.
 
-    \l{Standard CSS2 selector} syntax is used for the query.
+    \l{Standard CSS selector} syntax is used for the query.
+
+    This method is equivalent to Element::querySelectorAll in the \l{DOM Selectors API}.
 
     \note This search is performed recursively.
 
@@ -240,7 +242,9 @@ QWebElementCollection QWebElement::findAll(const QString &selectorQuery) const
     Returns the first child element that matches the given CSS selector
     \a selectorQuery.
 
-    \l{Standard CSS2 selector} syntax is used for the query.
+    \l{Standard CSS selector} syntax is used for the query.
+
+    This method is equivalent to Element::querySelector in the \l{DOM Selectors API}.
 
     \note This search is performed recursively.
 
@@ -1520,6 +1524,7 @@ QWebElementCollectionPrivate* QWebElementCollectionPrivate::create(const PassRef
 
 /*!
     \class QWebElementCollection
+    \inmodule QtWebKit
     \since 4.6
     \brief The QWebElementCollection class represents a collection of web elements.
     \preliminary
@@ -1710,6 +1715,7 @@ QList<QWebElement> QWebElementCollection::toList() const
 
 /*!
     \class QWebElementCollection::const_iterator
+    \inmodule QtWebKit
     \since 4.6
     \brief The QWebElementCollection::const_iterator class provides an STL-style const iterator for QWebElementCollection.
 
@@ -1900,6 +1906,7 @@ QList<QWebElement> QWebElementCollection::toList() const
 
 /*!
     \class QWebElementCollection::iterator
+    \inmodule QtWebKit
     \since 4.6
     \brief The QWebElementCollection::iterator class provides an STL-style iterator for QWebElementCollection.
 

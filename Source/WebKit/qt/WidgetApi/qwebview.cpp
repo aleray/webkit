@@ -83,7 +83,7 @@ void QWebViewPrivate::_q_pageDestroyed()
     It can be used in various applications to display web content live from the
     Internet.
 
-    The image below shows QWebView previewed in \QD with a Nokia website.
+    The image below shows QWebView previewed in Qt Creator with the \l{Qt Homepage}.
 
     \image qwebview-url.png
 
@@ -148,8 +148,8 @@ void QWebViewPrivate::_q_pageDestroyed()
     if you do not require QWidget attributes. Nevertheless, Qt WebKit depends
     on QtGui, so you should use a QApplication instead of QCoreApplication.
 
-    \sa {Previewer Example}, {Web Browser}, {Form Extractor Example},
-    {Google Chat Example}, {Fancy Browser Example}
+    \sa {Previewer Example}, {Tab Browser}, {Form Extractor Example},
+    {Fancy Browser Example}
 */
 
 #ifndef QT_NO_ACCESSIBILITY
@@ -725,10 +725,8 @@ bool QWebView::event(QEvent *e)
             || e->type() == QEvent::TouchEnd
             || e->type() == QEvent::TouchUpdate
             || e->type() == QEvent::TouchCancel) {
-            d->page->event(e);
-
-            // Always return true so that we'll receive also TouchUpdate and TouchEnd events
-            return true;
+            if (d->page->event(e))
+                return true;
         } else if (e->type() == QEvent::Leave)
             d->page->event(e);
     }

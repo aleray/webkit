@@ -1928,6 +1928,8 @@ void QWebPage::setViewportSize(const QSize &size) const
     if (!mainFrame->hasView())
         return;
 
+    d->setDevicePixelRatio(d->view->devicePixelRatio());
+
     mainFrame->setViewportSize(size);
 }
 
@@ -3419,11 +3421,6 @@ QWebPage::VisibilityState QWebPage::visibilityState() const
   \fn void QWebPage::restoreFrameStateRequested(QWebFrame* frame);
 
   This signal is emitted when the load of \a frame is finished and the application may now update its state accordingly.
-*/
-
-/*!
-  \fn QWebPagePrivate* QWebPage::handle() const
-  \internal
 */
 
 #include "moc_qwebpage.cpp"

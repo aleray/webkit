@@ -433,7 +433,7 @@ void QQuickWebViewPrivate::didFailLoad(WKPageRef, WKFrameRef frame, WKErrorRef e
     }
 
     int errorCode = error.errorCode();
-    if (errorCode == kWKErrorCodeFrameLoadInterruptedByPolicyChange && errorCode == kWKErrorCodePlugInWillHandleLoad) {
+    if (errorCode == kWKErrorCodeFrameLoadInterruptedByPolicyChange || errorCode == kWKErrorCodePlugInWillHandleLoad) {
         QWebLoadRequest loadRequest(q->url(), QQuickWebView::LoadSucceededStatus);
         q->emitUrlChangeIfNeeded();
         emit q->loadingChanged(&loadRequest);
@@ -1585,25 +1585,29 @@ QQuickWebPage* QQuickWebViewExperimental::page()
     QML application.
 
     QML WebView version 3.0 is incompatible with previous QML \l
-    {QtWebKit1::WebView} {WebView} API versions.  It allows an
+    WebView API versions.  It allows an
     application to load pages into the WebView, either by URL or with
     an HTML string, and navigate within session history.  By default,
     links to different pages load within the same WebView, but applications
     may intercept requests to delegate links to other functions.
 
-    This sample QML application loads a web page, responds to session
-    history context, and intercepts requests for external links:
+    The following sample QML application loads a web page, responds to session
+    history context, and intercepts requests for external links. It also makes
+    use of \l ScrollView from \l {Qt Quick Controls} to add scroll bars for
+    the content area.
 
     \code
     import QtQuick 2.0
+    import QtQuick.Controls 1.0
     import QtWebKit 3.0
 
-    Page {
+    ScrollView {
+        width: 1280
+        height: 720
         WebView {
             id: webview
             url: "http://qt-project.org"
-            width: parent.width
-            height: parent.height
+            anchors.fill: parent
             onNavigationRequested: {
                 // detect URL scheme prefix, most likely an external link
                 var schemaRE = /^\w+:/;
@@ -2175,6 +2179,10 @@ void QQuickWebView::handleFlickableMouseRelease(const QPointF& position, qint64 
     was originally retrieved from \c http://www.example.com/documents/overview.html
     and that was the base url, then an image referenced with the relative url \c diagram.png
     would be looked for at \c{http://www.example.com/documents/diagram.png}.
+
+    It is important to keep in mind that the \a html string will be converted to UTF-16
+    internally. Textual resources, such as scripts or style sheets, will be treated as
+    UTF-16 as well, unless they have an explicit charset property in their referencing tag.
 
     If an \a unreachableUrl is passed it is used as the url for the loaded
     content. This is typically used to display error pages for a failed
