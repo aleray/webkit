@@ -822,8 +822,8 @@ void QWebFrame::print(QPrinter *printer) const
     if (!painter.begin(printer))
         return;
 
-    const qreal zoomFactorX = (qreal)printer->logicalDpiX() / qt_defaultDpi();
-    const qreal zoomFactorY = (qreal)printer->logicalDpiY() / qt_defaultDpi();
+    const qreal zoomFactorX = (qreal)printer->logicalDpiX() / 72;
+    const qreal zoomFactorY = (qreal)printer->logicalDpiY() / 72;
 
     QRect qprinterRect = printer->pageRect();
 
